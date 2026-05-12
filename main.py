@@ -1,10 +1,11 @@
 import logging
-import time
+import os
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, CommandHandler, ContextTypes, CallbackQueryHandler
 
-# Replace with your actual Bot Token from @BotFather
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+# Railway will look for this variable in the 'Variables' tab
+# If running locally, you can replace os.environ.get with your string "8250192946:AAGR8..."
+BOT_TOKEN = os.environ.get( "8250192946:AAGR8rWvqg4qW4bJxfbTS1aq74CcBmo6HNA")
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -25,8 +26,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    # Check if this is a callback or a new command
-    message_text = "🚀 **Instagram Anti-Ban Console (2026)**\n\nUse the buttons below to rotate your identity and stay invisible to AI detection."
+    message_text = "🚀 **Instagram Anti-Ban Console**\n\nYour token is active. Use these tools to protect your ID from bot-detection."
     
     if update.message:
         await update.message.reply_text(message_text, reply_markup=reply_markup, parse_mode="Markdown")
@@ -40,21 +40,28 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if query.data == 'ip_refresh':
         text = (
             "🔄 **IP REFRESH PROTOCOL**\n\n"
-            "Instagram flags 'Static' or 'Blacklisted' IPs. Follow this to get a fresh one:\n\n"
-            "1. **Switch to Mobile Data:** Never use Wi-Fi for this.\n"
-            "2. **The 10-Second Cycle:** Turn on **Airplane Mode** for exactly 10 seconds.\n"
-            "3. **Reconnect:** Turn it off. Your carrier will assign a brand new IP address.\n\n"
-            "📍 **Check Success:** Go to [WhatIsMyIP](https://www.whatismyip.com/) before and after to confirm the address changed."
+            "1. Switch to **Mobile Data**.\n"
+            "2. Turn **Airplane Mode ON** for 10 seconds.\n"
+            "3. Turn it OFF to get a fresh IP address.\n\n"
+            "This makes your actions look like they are coming from a new user."
         )
     
     elif query.data == 'clean_device':
-        text = "🧹 **Device Clean:** Clear IG Cache and Force Stop the app to remove session fingerprints."
+        text = (
+            "🧹 **Device Cleanup**\n\n"
+            "• **Android:** Clear IG Cache & Force Stop.\n"
+            "• **iOS:** Offload and Reinstall IG app.\n"
+            "• **Browser:** Clear all cookies for Instagram.com."
+        )
     
     elif query.data == 'link_identity':
-        text = "🔗 **Identity:** Link a verified Facebook or WhatsApp to increase your human 'Trust Score'."
+        text = (
+            "🔗 **Identity Trust**\n\n"
+            "Link a Facebook profile or WhatsApp Business number in your IG 'Accounts Center' to boost your human trust score."
+        )
 
     back_keyboard = [[InlineKeyboardButton("⬅️ Back to Menu", callback_data='back_to_menu')]]
-    await query.edit_message_text(text=text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup(back_keyboard), disable_web_page_preview=True)
+    await query.edit_message_text(text=text, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup(back_keyboard))
 
 def main():
     application = Application.builder().token(BOT_TOKEN).build()
@@ -62,7 +69,7 @@ def main():
     application.add_handler(CallbackQueryHandler(start, pattern='^back_to_menu$'))
     application.add_handler(CallbackQueryHandler(button_handler))
     
-    print("Bot is running with IP Refresh logic...")
+    print("Bot is live with your token...")
     application.run_polling()
 
 if __name__ == "__main__":
