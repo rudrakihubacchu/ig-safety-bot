@@ -5,7 +5,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, CallbackQuer
 
 # Railway will look for this variable in the 'Variables' tab
 # If running locally, you can replace os.environ.get with your string "8250192946:AAGR8..."
-BOT_TOKEN = os.environ.get( "8250192946:AAGR8rWvqg4qW4bJxfbTS1aq74CcBmo6HNA")
+BOT_TOKEN = os.environ.get( "")
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
